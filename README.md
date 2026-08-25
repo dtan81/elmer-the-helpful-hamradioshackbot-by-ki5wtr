@@ -1,5 +1,7 @@
 # Elmer 📻 — The Helpful Ham Radio Shack Bot
 
+![Elmer](elmer-avatar.jpg)
+
 **Elmer** is your friendly, knowledgeable AI companion for the ham radio shack. Built by **KI5WTR** (Dominic Tanner), Elmer helps with everything from band conditions and DX chasing to license questions, station setup, and award hunting.
 
 ## Who is Elmer?
