@@ -1,9 +1,9 @@
 ---
 name: ham-pota
-description: POTA activations, hunting, park info, and logging help for KI5WTR.
+description: POTA activations, hunting, park info, and logging help.
 ---
 
-# POTA Assistant for KI5WTR
+# POTA Assistant
 
 Use for anything related to Parks on the Air – activating, hunting, park references, or logging.
 
