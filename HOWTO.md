@@ -1,98 +1,167 @@
-# How to Set Up Elmer
+# How to Set Up Elmer — The Helpful Ham Radio Shack Bot
 
-Elmer is a friendly, ham-radio-focused AI agent running on OpenClaw. This guide covers setting up the full stack on a Raspberry Pi (tested on Pi 5).
+Elmer is a friendly, knowledgeable AI agent purpose-built for the ham radio shack. This guide provides a complete, one-stop path to deploy Elmer on a Raspberry Pi 5 with OpenClaw, Telegram, and Grok (xAI) — or your preferred model provider.
 
 ## Prerequisites
 
-- Raspberry Pi 4 or 5 (or any Debian-based Linux device)
-- OpenClaw installed and running
-- xAI API key (for Grok models)
-- Telegram Bot Token (recommended)
+- Raspberry Pi 5 (or Pi 4) running Raspberry Pi OS (64-bit recommended)
+- Internet connection for initial setup
+- xAI API key (for Grok models) — or OpenAI / local Ollama
+- Telegram account (for bot interface — recommended)
 
-## 1. Run the OpenClaw Setup Wizard
+## 1. Install Raspberry Pi OS & Basic System
 
-Launch the interactive setup wizard to configure your instance:
+```bash
+# Update system
+sudo apt update && sudo apt full-upgrade -y
+sudo apt install -y git curl jq
+```
+
+## 2. Install OpenClaw
+
+Follow the official OpenClaw installation for Raspberry Pi:
+
+```bash
+curl -fsSL https://get.openclaw.ai | sh
+```
+
+Verify:
+
+```bash
+openclaw status
+```
+
+## 3. Run the OpenClaw Setup Wizard
 
 ```bash
 openclaw setup
 ```
 
-Follow the prompts to set your default model provider, API keys, and basic gateway settings.
+Follow the interactive prompts to configure your instance, default model provider, and basic gateway settings.
 
-## 2. Configure xAI as the Provider
+## 4. Configure xAI (Grok) as Primary Provider
 
-Edit the main config file:
-
-```bash
-sudo nano /home/ki5wtr/.openclaw/openclaw.json
-```
-
-Ensure the xAI provider is configured under the `models` section with your API key.
-
-## 3. Configure Telegram (Detailed)
-
-1. Open Telegram and search for [@BotFather](https://t.me/botfather).
-2. Start a chat and send `/newbot`.
-3. Follow the prompts to name your bot (e.g., "Elmer - KI5WTR Assistant") and choose a username (e.g., `elmer_ki5wtr_bot`).
-4. Copy the bot token provided by BotFather.
-5. Edit the OpenClaw config:
+Edit the main config:
 
 ```bash
 sudo nano /home/ki5wtr/.openclaw/openclaw.json
 ```
 
-Add or update the Telegram channel section:
+Add your xAI API key under the `models` section (example):
+
+```json
+"models": {
+  "default": "xai/grok-4.3",
+  "providers": {
+    "xai": {
+      "apiKey": "xai-XXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+  }
+}
+```
+
+Alternative providers (OpenAI, local Ollama) can be configured the same way.
+
+## 5. Configure Telegram Bot (Detailed)
+
+1. Open Telegram → search **@BotFather**
+2. Send `/newbot` and follow the prompts
+   - Bot name example: `Elmer - KI5WTR Assistant`
+   - Username example: `elmer_ki5wtr_bot`
+3. Copy the **API token** BotFather provides
+4. Edit OpenClaw config:
+
+```bash
+sudo nano /home/ki5wtr/.openclaw/openclaw.json
+```
+
+Add under `channels`:
 
 ```json
 "channels": {
   "telegram": {
     "enabled": true,
-    "token": "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
+    "token": "123456:ABCDEF1234ghIkl-zyx57W2v1u123ew11"
   }
 }
 ```
 
-6. Restart the gateway to apply changes:
+5. Restart the gateway:
 
 ```bash
 openclaw gateway restart
 ```
 
-Verify the bot is active by sending a message to it in Telegram.
+6. Test by sending a message to your new bot in Telegram.
 
-## 4. Embeddings Configuration
+## 6. Embeddings (Optional but Recommended)
 
-The default is OpenAI. Option B: use local Ollama (nomic-embed-text).
+Default uses OpenAI. For fully local operation:
 
-## 5. Agent Files (Elmer Personality)
+- Install Ollama + `nomic-embed-text` model
+- Update config to use local embeddings
+
+## 7. Agent Personality Files
+
+Place these files in your OpenClaw workspace (they are already included in this repository):
 
 - `IDENTITY.md`
 - `SOUL.md`
 - `USER.md`
 - `TOOLS.md`
 - `AGENTS.md`
-- `MEMORY.md` and daily memory files
+- `MEMORY.md` + daily memory files
 
-## 6. Ham Radio Skills
+## 8. Ham Radio Skills
 
-The five specialized ham radio skills are automatically loaded:
+The following specialized skills are included and automatically loaded:
 
 ### ham-dx
-- DX clusters, rare stations, DXpeditions
-- Examples: "Any rare DX on 20m?", "Needed DX on 10m?"
+DX clusters, rare stations, DXpeditions.
 
 ### ham-license
-- License privileges, band plans, power limits, exam questions
-- Examples: "What are my privileges on 40m as Extra?", "Show me the 20m band plan"
+**License privileges, band plans, power limits, exam questions, and FCC Part 97 compliance.**  
+This skill is the primary resource for staying within current FCC regulations.
 
 ### ham-propagation
-- RF conditions, solar indices, MUF, grayline, operating recommendations
-- Examples: "How is propagation on 15m?", "Is 10m open to Europe?"
+Real-time band conditions, solar indices, MUF, grayline.
 
 ### ham-satellite
-- Satellite passes, Doppler, modes, operating tips
-- Examples: "When is the next ISS pass?", "GOOD FM satellite passes?"
+Satellite passes, Doppler, operating tips.
 
 ### ham-station
-- Ki5WTR personal station assistant (HF, digital, POTA , EmComm, APRS)
-- Examples: "Pota bands today?", "Help me plan 40m digital setup", "Contests this weekend?"
+Personal station assistant (HF, digital, POTA, EmComm, APRS, contests).
+
+## 9. FCC Compliance & Regulatory Notes
+
+Elmer is designed to help you operate **legally and responsibly**.
+
+- Always verify current privileges with the `ham-license` skill before transmitting.
+- The `ham-license` skill references current FCC Part 97 rules and ARRL band charts.
+- Never rely solely on AI output for regulatory decisions — cross-check with official FCC or ARRL sources when in doubt.
+- Elmer will refuse requests that would encourage operation outside authorized privileges.
+
+## 10. Final Verification
+
+```bash
+openclaw status
+openclaw gateway restart
+```
+
+Send a test message via Telegram:
+- “What’s the current SFI and Kp?”
+- “Show me my Extra class privileges on 40m”
+- “Any rare DX on 20m right now?”
+
+You now have a fully functional, regulation-aware Elmer instance running on your Pi 5.
+
+---
+
+**Repository Contents**
+This repo is the complete one-stop resource for Elmer:
+- Full setup instructions (this file)
+- All personality and configuration files
+- The five core ham radio skills (including FCC compliance via `ham-license`)
+- Ready for deployment or further customization
+
+73 de Elmer 📻
