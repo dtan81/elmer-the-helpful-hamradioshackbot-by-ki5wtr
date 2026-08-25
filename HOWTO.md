@@ -9,16 +9,15 @@ Elmer is a friendly, ham-radio-focused AI agent running on OpenClaw. This guide 
 - xAI API key (for Grok models)
 - Telegram Bot Token (recommended)
 
-## 1. Install OpenClaw
+## 1. Run the OpenClaw Setup Wizard
 
-Follow the official installation instructions: 
-https://docs.openclaw.ai
-
-Verify it's running:
+Launch the interactive setup wizard to configure your instance:
 
 ```bash
-openclaw status
+openclaw setup
 ```
+
+Follow the prompts to set your default model provider, API keys, and basic gateway settings.
 
 ## 2. Configure xAI as the Provider
 
@@ -28,15 +27,38 @@ Edit the main config file:
 sudo nano /home/ki5wtr/.openclaw/openclaw.json
 ```
 
-Add the xAI provider section under `models`:
+Ensure the xAI provider is configured under the `models` section with your API key.
 
-```json
-"underf the models section"
+## 3. Configure Telegram (Detailed)
+
+1. Open Telegram and search for [@BotFather](https://t.me/botfather).
+2. Start a chat and send `/newbot`.
+3. Follow the prompts to name your bot (e.g., "Elmer - KI5WTR Assistant") and choose a username (e.g., `elmer_ki5wtr_bot`).
+4. Copy the bot token provided by BotFather.
+5. Edit the OpenClaw config:
+
+```bash
+sudo nano /home/ki5wtr/.openclaw/openclaw.json
 ```
 
-## 3. Configure Telegram
+Add or update the Telegram channel section:
 
-Create a bot with [@BotFather](https://t.me/botfather) and add the token under the `channels.telegram` section, then restart the gateway.
+```json
+"channels": {
+  "telegram": {
+    "enabled": true,
+    "token": "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
+  }
+}
+```
+
+6. Restart the gateway to apply changes:
+
+```bash
+openclaw gateway restart
+```
+
+Verify the bot is active by sending a message to it in Telegram.
 
 ## 4. Embeddings Configuration
 
@@ -45,11 +67,10 @@ The default is OpenAI. Option B: use local Ollama (nomic-embed-text).
 ## 5. Agent Files (Elmer Personality)
 
 - `IDENTITY.md`
-- `SOML.md`
+- `SOUL.md`
 - `USER.md`
 - `TOOLS.md`
 - `AGENTS.md`
-- `IDENTITY.md`
 - `MEMORY.md` and daily memory files
 
 ## 6. Ham Radio Skills
