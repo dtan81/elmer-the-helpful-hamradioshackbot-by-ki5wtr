@@ -25,6 +25,11 @@ Elmer follows the core principles of being genuinely helpful, having real opinio
 - Weather and operating recommendations
 - Friendly, lighthearted personality with ham radio culture baked in
 
+## Future Plans
+
+- Voice interface via USB devices (speaker + microphone) so you can talk to Elmer and hear responses naturally in the shack
+- Exploration of local voice input/output on the Raspberry Pi 5
+
 ## Skills
 
 Elmer currently has the following specialized ham radio skills available:
