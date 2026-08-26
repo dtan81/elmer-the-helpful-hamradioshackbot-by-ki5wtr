@@ -31,70 +31,48 @@ Verify the installation:
 openclaw status
 ```
 
-## 3. Run the OpenClaw Onboarding Wizard
+## 3. Run the OpenClaw Onboarding Wizard (Recommended)
 
-**Important:** Use the correct command:
+This is the **main step** for configuration. The wizard handles model selection, API keys, Telegram integration, and gateway setup in one interactive flow.
 
 ```bash
 openclaw onboard
 ```
 
-Follow the interactive prompts to configure your instance, choose your default model provider (Grok recommended), and set up the gateway.
+During the wizard you will be prompted for:
 
-## 4. Configure xAI (Grok) as Primary Provider
+- Your preferred model provider (select **xAI / Grok**)
+- Your xAI API key
+- Telegram bot token (if setting up Telegram)
+- Other gateway and workspace preferences
 
-Edit the main config file:
+Follow the prompts carefully. This replaces most manual configuration.
+
+## 4. (Optional) Manual Configuration
+
+Only edit the config file manually if you need to make advanced changes after onboarding:
 
 ```bash
 sudo nano ~/.openclaw/openclaw.json
 ```
 
-Add your xAI API key under the models section. Example:
+Most users should not need to do this.
 
-```json
-"models": {
-  "default": "xai/grok-4.3",
-  "providers": {
-    "xai": {
-      "apiKey": "xai-XXXXXXXXXXXXXXXXXXXXXXXX"
-    }
-  }
-}
-```
-
-Alternative providers (OpenAI, local Ollama) can be configured the same way.
-
-## 5. Configure Telegram Bot
-
-1. Open Telegram and search for **@BotFather**
+## 5. Configure Telegram Bot (if not done during onboard)
+\n1. Open Telegram and search for **@BotFather**
 2. Send `/newbot` and follow the prompts
    - Bot name example: `Elmer - KI5WTR Assistant`
    - Username example: `elmer_ki5wtr_bot`
 3. Copy the **API token** that BotFather provides
-4. Edit the OpenClaw config:
+4. Re-run `openclaw onboard` (or edit the config manually if preferred) and provide the token when prompted
 
-```bash
-sudo nano ~/.openclaw/openclaw.json
-```
-
-Add the Telegram channel under `channels`:
-
-```json
-"channels": {
-  "telegram": {
-    "enabled": true,
-    "token": "123456:ABCDEF1234ghIkl-zyx57W2v1u123ew11"
-  }
-}
-```
-
-5. Restart the gateway:
+After configuration, restart the gateway:
 
 ```bash
 openclaw gateway restart
 ```
 
-6. Test by sending a message to your new bot in Telegram.
+Test by sending a message to your bot in Telegram.
 
 ## 6. Embeddings (Optional but Recommended for Local Use)
 
@@ -102,7 +80,7 @@ Default uses OpenAI embeddings. For fully local operation:
 
 - Install Ollama
 - Pull the `nomic-embed-text` model
-- Update the config to point to your local embedding provider
+- Configure during `openclaw onboard` or update the config afterward
 
 ## 7. Agent Personality & Configuration Files
 
