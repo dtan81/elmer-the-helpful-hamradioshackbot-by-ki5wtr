@@ -25,6 +25,20 @@ Elmer follows the core principles of being genuinely helpful, having real opinio
 - Weather and operating recommendations
 - Friendly, lighthearted personality with ham radio culture baked in
 
+## Skills
+
+Elmer currently has the following specialized ham radio skills available:
+
+- **ham-aprs** – APRS tracking, messaging, digipeaters, and tactical use
+- **ham-digital** – FT8, FT4, and other digital mode help (setup, strategy, logging)
+- **ham-dx** – Monitor DX clusters, rare stations, DXpeditions, and needed entities
+- **ham-emcomm** – Emergency communications readiness, nets, Winlink, and procedures
+- **ham-license** – Amateur radio license privileges, band plans, power limits, and exam questions by country and class
+- **ham-pota** – POTA activations, hunting, park info, and logging help for KI5WTR
+- **ham-propagation** – Real-time HF/VHF band conditions, solar indices, MUF, grayline, and operating recommendations
+- **ham-satellite** – Amateur satellite passes, Doppler, modes, and operating tips
+- **ham-station** – Personal station assistant for KI5WTR – HF, digital, POTA, EmComm, light contesting, and APRS workflows
+
 ## Project Goals
 
 This repository documents and develops Elmer as a personal ham radio shack assistant. The goal is a reliable, always-available companion that keeps costs low while delivering full value on demand.
