@@ -6,8 +6,6 @@ openclaw-workspace-state.json*
 
 # Media and temporary files
 media/inbound/
-*.jpg
-*.png
 *.log
 
 # System and backup files
