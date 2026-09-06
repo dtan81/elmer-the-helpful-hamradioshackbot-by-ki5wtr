@@ -1,8 +1,27 @@
 Elmer 📻 — The Helpful Ham Radio Shack Bot
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ![Elmer](media/elmer-radio.jpg)
 
 Elmer is your friendly, knowledgeable AI companion for the ham radio shack. Built by KI5WTR (Dominic Tanner), Elmer helps with everything from band conditions and DX chasing to license questions, station setup, and award hunting.
+
+## Quick Start / Replication
+
+Want to build your own Elmer? See the complete replication guide:
+
+- **[SETUP.md](SETUP.md)** — Full step-by-step instructions (hardware, OpenClaw installation, Telegram, mobile app pairing, skills, and more)
+
+## Table of Contents
+
+- [Who is Elmer?](#who-is-elmer)
+- [Features](#features)
+- [Future Plans](#future-plans)
+- [Skills](#skills)
+- [Project Goals](#project-goals)
+- [Tech & Tools](#tech--tools)
+- [Getting Started](#getting-started)
+- [Credits](#credits)
 
 ## Who is Elmer?
 

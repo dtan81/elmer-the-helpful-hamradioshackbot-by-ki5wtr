@@ -1,0 +1,28 @@
+# Local / experimental content
+local/
+
+# OpenClaw runtime files
+openclaw-workspace-state.json*
+
+# Media and temporary files
+media/inbound/
+*.jpg
+*.png
+*.log
+
+# System and backup files
+backup/
+*.bak
+*.tar.gz
+
+# Node / dependency files (if any)
+node_modules/
+npm-debug.log
+
+# macOS / Windows / editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
