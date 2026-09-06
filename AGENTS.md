@@ -37,7 +37,7 @@ Capture what matters: decisions, context, things to remember. Skip secrets unles
 Memory is limited. "Mental notes" don't survive session restarts; files do. Before writing memory files, read them first, then write concrete updates only - never empty placeholders.
 
 - Someone says "remember this" -> update `memory/YYYY-MM-DD.md` or the relevant file.
-- You learn a lesson -> update `AGENTS.md`, `TOOLS.md`, or the relevant skill.
+- You learn a lesson -> update `AGENTS.md` or the relevant skill.
 - You make a mistake -> document it so future-you doesn't repeat it.
 
 ## Red Lines
@@ -78,7 +78,9 @@ On platforms that support reactions (Discord, Slack), use emoji reactions natura
 
 ## Tools
 
-Skills provide your tools. When you need one, check its `SKILL.md`. Keep local notes (camera names, SSH details, voice preferences) in `TOOLS.md`.
+### Local notes
+
+Skills define how tools work. Keep environment-specific local notes in this section.
 
 **Voice storytelling:** if you have `sag` (ElevenLabs TTS), use voice for stories, movie summaries, and storytime moments - more engaging than walls of text.
 
