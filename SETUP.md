@@ -1,6 +1,21 @@
 # Elmer Setup Guide – Replicate This Instance
 
+> **To follow this guide, clone the repo and open `SETUP.md`.**
+>
+> See example output in the [README](README.md#example-output).
+
+**Last Updated:** 2026-09-06  
+**Tested with:** OpenClaw 2026.9.2
+
 **Goal:** Step-by-step instructions to build an Elmer instance identical to the KI5WTR configuration on a Raspberry Pi 5 (16 GB).
+
+### Known Working Configuration
+
+- **OpenClaw Version:** 2026.9.2
+- **Hardware:** Raspberry Pi 5 (16 GB)
+- **Node.js:** 26.x
+- **Primary Channel:** Telegram (long polling)
+- **Remote Access:** Tailscale
 
 ### 1. Hardware Used
 - Raspberry Pi 5 (16 GB RAM)

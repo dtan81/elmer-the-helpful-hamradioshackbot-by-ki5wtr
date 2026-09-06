@@ -56,6 +56,45 @@ flowchart TB
     OC --> TS
 ```
 
+## Example Output
+
+Elmer produces daily briefs and responds naturally in Telegram.
+
+**Daily Brief Example (Telegram):**
+
+![Daily Brief](media/daily-brief-example.png)
+
+**Sample Daily Brief Content:**
+
+> **📻 KI5WTR Daily Brief • Sunday 6 Sep 2026 • 07:00 MDT (DM65pf)**
+>
+> **📰 Headlines**
+> • Reuters/AP: Oregon football highlights; ongoing global diplomacy chatter.
+> • HN: Intel fly-open post, dev tooling buzz, AI infra chatter.
+> • Reputable: Quiet weekend on major wires; tech & science steady.
+>
+> **📡 ARRL Ham News**
+> Latest: Contest season ramping; band plan tweaks discussed; keep an eye on FCC filings. 73s to the weary warriors.
+>
+> **🌤️ Rio Rancho 87124 (DM65pf)**
+> ☀️ Mostly sunny • High 91°F / Low ~62°F
+> 💨 Calm → light S breeze (5-10 mph)
+> 🌡️ Current: Warm & pleasant, no alerts. Perfect shack weather!
+>
+> **🔐 Tailscale**
+> 🟢 Connected (RackPi5 online) • No active exit node. Peers: ShackPi5 & others ready. MagicDNS humming on tail713e6f.ts.net.
+>
+> **📊 HF Propagation (DM65pf)**
+> Solar: SFI ~140-160 range, A-index low-moderate.
+> Good 20m/40m openings expected mid-day; 15m/10m spotty but fun. Watch for evening grayline magic on 80m. Conditions fair-to-good — fire up the rig!
+>
+> **🛰️ ISS Passes (next 24h, DM65pf)**
+> • ~20:45 MDT: 6 min pass, max elev 42° SW→NE
+> • ~22:20 MDT: 4 min pass, max elev 28° W→E
+> (visible & high enough for easy eyeball!)
+>
+> Stay frosty on the bands, OM! 📻✨
+
 ## Who is Elmer?
 
 **Name:** Elmer  
