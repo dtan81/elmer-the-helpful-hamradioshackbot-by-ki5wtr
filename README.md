@@ -58,11 +58,15 @@ flowchart TB
 
 ## Example Output
 
-Elmer produces daily briefs and responds naturally in Telegram.
+Elmer produces daily briefs and responds naturally in Telegram. He can also generate road-trip radio planning cards using the `ham-drive` skill.
 
 **Daily Brief Example (Telegram):**
 
 ![Daily Brief](media/daily-brief-example.png)
+
+**Ham-Drive Planning Example (Telegram):**
+
+![Ham Drive](media/ham-drive-example.jpg)
 
 **Sample Daily Brief Content:**
 
