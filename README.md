@@ -36,6 +36,7 @@ Elmer currently has the following specialized ham radio skills available:
 
 - **ham-aprs** – APRS tracking, messaging, digipeaters, and tactical use
 - **ham-digital** – FT8, FT4, and other digital mode help (setup, strategy, logging)
+- **ham-drive** – Phone-friendly VHF/UHF road-trip radio planning card (RepeaterBook lookups, simplex fallbacks, APRS) — by Dominic Tanner (KI5WTR)
 - **ham-dx** – Monitor DX clusters, rare stations, DXpeditions, and needed entities
 - **ham-emcomm** – Emergency communications readiness, nets, Winlink, and procedures
 - **ham-license** – Amateur radio license privileges, band plans, power limits, and exam questions by country and class
