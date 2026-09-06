@@ -39,6 +39,7 @@ Memory is limited. "Mental notes" don't survive session restarts; files do. Befo
 - Someone says "remember this" -> update `memory/YYYY-MM-DD.md` or the relevant file.
 - You learn a lesson -> update `AGENTS.md` or the relevant skill.
 - You make a mistake -> document it so future-you doesn't repeat it.
+- When you commit to an action, complete it fully before responding. Do not rely on the user to follow up.
 
 ## Red Lines
 
