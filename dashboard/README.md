@@ -25,18 +25,16 @@ Designed to be viewed remotely while away from the shack.
 
 ## Quick Start
 
-1. Clone or copy the `dashboard/` directory to your OpenClaw host.
-2. Create and activate a virtual environment:
+1. Clone or copy the `dashboard/` directory.
+2. Install dependencies:
    ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   pip install flask psutil
+   pip install -r requirements.txt
    ```
 3. Run the server:
    ```bash
    python server.py
    ```
-4. Open `http://localhost:8080` (or the appropriate host:port).
+4. Open `http://localhost:8080` (or your host IP:port).
 
 The dashboard is served on port 8080 by default.
 
@@ -44,10 +42,6 @@ The dashboard is served on port 8080 by default.
 
 The UI title and branding can be easily changed in `index.html`. The backend (`server.py`) pulls data from standard Linux paths and `vcgencmd` / `tailscale` commands.
 
-## Credit
-
-Dashboard created by Dominic Tanner.
-
 ## License
 
-Part of the Elmer project.
+This dashboard is released under the MIT License. See the main repository [LICENSE](../LICENSE) for details.
