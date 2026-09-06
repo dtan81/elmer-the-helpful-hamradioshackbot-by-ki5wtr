@@ -83,7 +83,7 @@ Latest: Contest season ramping; band plan tweaks discussed; keep an eye on FCC f
 🌡️ Current: Warm & pleasant, no alerts. Perfect shack weather!
 
 **🔐 Tailscale**
-🟢 Connected (RackPi5 online) • No active exit node. Peers: ShackPi5 & others ready. MagicDNS humming on tail713e6f.ts.net.
+🟢 Connected (RackPi5 online) • No active exit node. Peers: ShackPi5 & others ready. MagicDNS humming on [tail](http://tail713e6f.ts.net/)xxxxxxx[.net](http://tail713e6f.ts.net/).
 
 **📊 HF Propagation (DM65pf)**
 Solar: SFI ~140-160 range, A-index low-moderate.
