@@ -51,11 +51,20 @@ This repository documents and develops Elmer as a personal ham radio shack assis
 
 ## Tech & Tools
 
-Elmer runs inside the OpenClaw platform with access to specialized skills for:
+Elmer runs inside the OpenClaw platform with the following specialized ham radio skills enabled:
 
-- Ham radio DX, propagation, licensing, and station management
-- Web search, GitHub integration, memory, and task orchestration
-- Image generation, diagrams, and more
+- **ham-aprs** – APRS tracking, messaging, and digipeater support
+- **ham-digital** – FT8, FT4, and other digital mode assistance
+- **ham-drive** – VHF/UHF road-trip radio planning
+- **ham-dx** – DX cluster monitoring and DXpedition tracking
+- **ham-emcomm** – Emergency communications and Winlink support
+- **ham-license** – License privileges, band plans, and exam help
+- **ham-pota** – POTA activations, hunting, and logging
+- **ham-propagation** – Real-time HF/VHF band conditions and forecasts
+- **ham-satellite** – Satellite pass predictions and operating tips
+- **ham-station** – General station assistant workflows
+
+Additional platform capabilities include web search, GitHub integration, memory management, image generation, and task orchestration.
 
 ## Getting Started
 
