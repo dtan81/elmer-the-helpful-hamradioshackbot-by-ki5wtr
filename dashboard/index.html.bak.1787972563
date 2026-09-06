@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELMER • RACKPI5 DASHBOARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 600; }
+        .futuristic-bg { background: radial-gradient(circle at center, #0a0a0f 0%, #050507 100%); }
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+        .metric-bar { height: 14px; background: linear-gradient(90deg, #111113, #1a1a20); border-radius: 9999px; overflow: hidden; }
+        .metric-fill { height: 100%; border-radius: 9999px; transition: width 800ms cubic-bezier(0.23, 1.0, 0.32, 1); }
+        .section-header { font-size: 0.75rem; letter-spacing: 2px; font-weight: 600; }
+        .stat-value { font-variant-numeric: tabular-nums; }
+    </style>
+</head>
+<body class="futuristic-bg text-zinc-200 min-h-screen">
+    <!-- Top Bar -->
+    <div class="border-b border-white/10 bg-black/40 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-x-4">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
+                        <i class="fa-solid fa-satellite text-black text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-display text-2xl tracking-tighter">ELMER</div>
+                        <div class="text-[10px] text-zinc-500 -mt-1">RACKPI5 • KI5WTR</div>
+                    </div>
+                </div>
+                <div class="px-3 py-1 rounded-full bg-white/5 text-xs flex items-center gap-x-2 border border-white/10">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span class="text-emerald-400 text-xs font-medium">REALTIME</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-x-6 text-sm">
+                <div class="flex items-center gap-x-2 text-zinc-400">
+                    <i class="fa-solid fa-clock"></i>
+                    <span id="live-clock" class="font-mono tabular-nums">18:47:00</span>
+                </div>
+                <div class="px-4 py-1.5 rounded-3xl bg-white/5 border border-white/10 flex items-center gap-x-2 text-xs">
+                    <span class="text-zinc-400">LAST UPDATE</span>
+                    <span id="last-update" class="font-mono text-emerald-400">LIVE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-screen-2xl mx-auto px-8 pt-8 pb-12">
+        
+        <!-- Header -->
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <div class="text-xs tracking-[3px] text-cyan-400 font-medium mb-1">RACKPI5 • OPENCLAW v0.8.4</div>
+                <div class="font-display text-6xl tracking-tighter">MISSION CONTROL</div>
+            </div>
+            <div class="text-right">
+                <div class="text-emerald-400 text-sm flex items-center justify-end gap-x-2">
+                    <i class="fa-solid fa-check-double"></i>
+                    <span id="overall-status">ALL SYSTEMS NOMINAL</span>
+                </div>
+                <div class="text-zinc-500 text-xs">Uptime: <span id="uptime">—</span></div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- System Metrics -->
+            <div class="lg:col-span-5 glass rounded-3xl p-7 border border-white/10">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="section-header text-zinc-400">SYSTEM METRICS</div>
+                        <div class="text-xl font-semibold tracking-tight">Resource Utilization</div>
+                    </div>
+                    <i class="fa-solid fa-microchip text-2xl text-zinc-600"></i>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- CPU -->
+                    <div>
+                        <div class="flex justify-between items-baseline mb-2">
+                            <span class="text-sm font-medium">CPU Load</span>
+                            <span id="cpu-value" class="font-mono text-lg font-semibold text-orange-400 stat-value">0%</span>
+                        </div>
+                        <div class="metric-bar"><div id="cpu-bar" class="metric-fill bg-gradient-to-r from-orange-400 to-amber-400" style="width:0%"></div></div>
+                    </div>
+                    
+                    <!-- RAM -->
+                    <div>
+                        <div class="flex justify-between items-baseline mb-2">
+                            <span class="text-sm font-medium">Memory (<span id="ram-total">16</span> GB)</span>
+                            <span id="ram-value" class="font-mono text-lg font-semibold text-purple-400 stat-value">0%</span>
+                        </div>
+                        <div class="metric-bar"><div id="ram-bar" class="metric-fill bg-gradient-to-r from-purple-400 to-violet-400" style="width:0%"></div></div>
+                    </div>
+                    
+                    <!-- Disk -->
+                    <div>
+                        <div class="flex justify-between items-baseline mb-2">
+                            <span class="text-sm font-medium">Storage</span>
+                            <span id="disk-value" class="font-mono text-lg font-semibold text-cyan-400 stat-value">0%</span>
+                        </div>
+                        <div class="metric-bar"><div id="disk-bar" class="metric-fill bg-gradient-to-r from-cyan-400 to-teal-400" style="width:0%"></div></div>
+                    </div>
+                    
+                    <!-- Temperature -->
+                    <div>
+                        <div class="flex justify-between items-baseline mb-2">
+                            <span class="text-sm font-medium">SoC Temperature</span>
+                            <span id="temp-value" class="font-mono text-lg font-semibold text-emerald-400 stat-value">0°C</span>
+                        </div>
+                        <div class="metric-bar"><div id="temp-bar" class="metric-fill bg-gradient-to-r from-emerald-400 to-green-400" style="width:0%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pi Status -->
+            <div class="lg:col-span-4 glass rounded-3xl p-7 border border-white/10">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="section-header text-zinc-400">RASPBERRY PI 5</div>
+                        <div class="text-xl font-semibold tracking-tight">Hardware Health</div>
+                    </div>
+                    <i class="fa-solid fa-microchip text-2xl text-emerald-400"></i>
+                </div>
+                
+                <div class="space-y-4 text-sm">
+                    <div class="flex justify-between py-2 border-b border-white/10"><span class="text-zinc-400">Model</span><span class="font-mono text-emerald-300">Raspberry Pi 5 (16GB)</span></div>
+                    <div class="flex justify-between py-2 border-b border-white/10"><span class="text-zinc-400">Throttle</span><span id="throttle-status" class="font-mono text-emerald-400">CLEAN</span></div>
+                    <div class="flex justify-between py-2 border-b border-white/10"><span class="text-zinc-400">Temperature</span><span id="pi-temp" class="font-mono">—</span></div>
+                    <div class="flex justify-between py-2"><span class="text-zinc-400">Uptime</span><span id="pi-uptime" class="font-mono text-emerald-300">—</span></div>
+                </div>
+            </div>
+
+            <!-- OpenClaw + Tailscale -->
+            <div class="lg:col-span-3 glass rounded-3xl p-7 border border-white/10">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="section-header text-zinc-400">OPENCLAW + TAILSCALE</div>
+                        <div class="text-xl font-semibold tracking-tight">Services</div>
+                    </div>
+                </div>
+                
+                <div class="space-y-4 text-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="text-zinc-400">OpenClaw</span>
+                        <span id="openclaw-status" class="px-3 py-0.5 text-xs rounded-full bg-emerald-400/10 text-emerald-400 font-medium">RUNNING</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-zinc-400">Tailscale</span>
+                        <span id="tailscale-status" class="px-3 py-0.5 text-xs rounded-full bg-emerald-400/10 text-emerald-400 font-medium">—</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-zinc-400">Peers</span>
+                        <span id="tailscale-peers" class="font-mono text-emerald-300">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Telemetry -->
+            <div class="lg:col-span-12 glass rounded-3xl p-8 border border-white/10 mt-2">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="section-header text-zinc-400">LIVE TELEMETRY</div>
+                        <div class="text-2xl font-semibold tracking-tighter">Performance Indicators</div>
+                    </div>
+                    <div class="text-xs text-zinc-500">Updates every 5 seconds</div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6" id="telemetry-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const el = document.getElementById('live-clock');
+            setInterval(() => {
+                const now = new Date();
+                el.textContent = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            }, 1000);
+        }
+
+        function formatUptime(seconds) {
+            const d = Math.floor(seconds / 86400);
+            const h = Math.floor((seconds % 86400) / 3600);
+            return `${d}d ${h}h`;
+        }
+
+        function updateBar(id, percent, colorClass) {
+            const bar = document.getElementById(id);
+            if (!bar) return;
+            bar.style.width = percent + '%';
+            bar.className = `metric-fill ${colorClass}`;
+        }
+
+        async function fetchStatus() {
+            try {
+                const res = await fetch('/api/status');
+                const data = await res.json();
+                const s = data.system;
+
+                // CPU
+                document.getElementById('cpu-value').textContent = s.cpu_percent + '%';
+                const cpuColor = s.cpu_percent > 75 ? 'from-red-400 to-rose-400' : s.cpu_percent > 50 ? 'from-orange-400 to-amber-400' : 'from-emerald-400 to-green-400';
+                updateBar('cpu-bar', s.cpu_percent, cpuColor);
+
+                // RAM
+                document.getElementById('ram-total').textContent = s.memory_total_gb;
+                document.getElementById('ram-value').textContent = s.memory_percent + '%';
+                const ramColor = s.memory_percent > 85 ? 'from-red-400 to-rose-400' : s.memory_percent > 60 ? 'from-purple-400 to-violet-400' : 'from-purple-400 to-violet-400';
+                updateBar('ram-bar', s.memory_percent, ramColor);
+
+                // Disk
+                document.getElementById('disk-value').textContent = s.disk_percent + '%';
+                updateBar('disk-bar', s.disk_percent, 'from-cyan-400 to-teal-400');
+
+                // Temp
+                document.getElementById('temp-value').textContent = s.temperature + '°C';
+                document.getElementById('pi-temp').textContent = s.temperature + '°C';
+                updateBar('temp-bar', Math.min((s.temperature - 35) * 3.5, 100), 'from-emerald-400 to-green-400');
+
+                // Throttle
+                const throttleEl = document.getElementById('throttle-status');
+                throttleEl.textContent = s.throttle_status;
+                throttleEl.className = s.throttle_status === 'CLEAN' ? 'font-mono text-emerald-400' : 'font-mono text-orange-400';
+
+                // Uptime
+                document.getElementById('uptime').textContent = formatUptime(s.uptime_seconds);
+                document.getElementById('pi-uptime').textContent = formatUptime(s.uptime_seconds);
+
+                // Tailscale
+                const ts = data.tailscale;
+                const tsEl = document.getElementById('tailscale-status');
+                const peersEl = document.getElementById('tailscale-peers');
+                if (ts.online) {
+                    tsEl.textContent = 'ONLINE';
+                    tsEl.className = 'px-3 py-0.5 text-xs rounded-full bg-emerald-400/10 text-emerald-400 font-medium';
+                    peersEl.textContent = ts.peers || '0';
+                } else {
+                    tsEl.textContent = 'Not connected';
+                    tsEl.className = 'px-3 py-0.5 text-xs rounded-full bg-zinc-400/10 text-zinc-400 font-medium';
+                    peersEl.textContent = '—';
+                }
+
+                // OpenClaw
+                document.getElementById('openclaw-status').textContent = data.openclaw.status.toUpperCase();
+
+                // Performance Indicators grid
+                renderTelemetryGrid(data);
+
+                document.getElementById('last-update').textContent = 'LIVE';
+                
+            } catch (e) {
+                console.error('Failed to fetch status', e);
+                document.getElementById('last-update').textContent = 'ERROR';
+            }
+        }
+
+        function renderTelemetryGrid(data) {
+            const grid = document.getElementById('telemetry-grid');
+            if (!grid) return;
+
+            const s = data.system;
+            const items = [
+                { label: 'CPU', value: s.cpu_percent + '%', icon: 'fa-microchip', color: 'text-orange-400' },
+                { label: 'Memory', value: s.memory_percent + '%', icon: 'fa-memory', color: 'text-purple-400' },
+                { label: 'Disk', value: s.disk_percent + '%', icon: 'fa-hdd', color: 'text-cyan-400' },
+                { label: 'Temp', value: s.temperature + '°C', icon: 'fa-thermometer-half', color: 'text-emerald-400' },
+                { label: 'Uptime', value: formatUptime(s.uptime_seconds), icon: 'fa-clock', color: 'text-emerald-300' },
+                { label: 'Throttle', value: s.throttle_status, icon: 'fa-shield-halved', color: s.throttle_status === 'CLEAN' ? 'text-emerald-400' : 'text-orange-400' }
+            ];
+
+            grid.innerHTML = items.map(item => `
+                <div class="glass rounded-2xl p-4 border border-white/10">
+                    <div class="flex items-center gap-x-3 mb-2">
+                        <i class="fa-solid ${item.icon} ${item.color} text-xl"></i>
+                        <div class="text-xs tracking-widest text-zinc-500">${item.label}</div>
+                    </div>
+                    <div class="font-mono text-3xl font-semibold tabular-nums ${item.color}">${item.value}</div>
+                </div>
+            `).join('');
+        }
+
+        function startRealtime() {
+            fetchStatus(); // initial load
+            setInterval(fetchStatus, 5000);
+        }
+
+        function boot() {
+            updateClock();
+            startRealtime();
+            console.log('%c[ELMER] Realtime dashboard initialized', 'color:#444');
+        }
+
+        window.onload = boot;
+    </script>
+</body>
+</html>
