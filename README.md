@@ -20,8 +20,41 @@ Want to build your own Elmer? See the complete replication guide:
 - [Skills](#skills)
 - [Project Goals](#project-goals)
 - [Tech & Tools](#tech--tools)
+- [Architecture](#architecture)
 - [Getting Started](#getting-started)
 - [Credits](#credits)
+
+## Architecture
+
+```mermaid
+flowchart TB
+    subgraph Hardware["Hardware"]
+        Pi[Raspberry Pi 5<br/>16 GB RAM]
+    end
+
+    subgraph Gateway["OpenClaw Gateway"]
+        OC[OpenClaw Gateway<br/>Node 26]
+    end
+
+    subgraph Agent["Elmer Agent"]
+        Elmer[Elmer<br/>📻]
+    end
+
+    subgraph Channels["Channels"]
+        TG[Telegram]
+        Mobile[iOS / Android Nodes]
+    end
+
+    subgraph Remote["Remote Access"]
+        TS[Tailscale]
+    end
+
+    Pi --> OC
+    OC --> Elmer
+    Elmer --> TG
+    Elmer --> Mobile
+    OC --> TS
+```
 
 ## Who is Elmer?
 
