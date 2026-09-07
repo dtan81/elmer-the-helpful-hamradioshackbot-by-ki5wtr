@@ -17,6 +17,108 @@
         .metric-fill { height: 100%; border-radius: 9999px; transition: width 800ms cubic-bezier(0.23, 1.0, 0.32, 1); }
         .section-header { font-size: 0.75rem; letter-spacing: 2px; font-weight: 600; }
         .stat-value { font-variant-numeric: tabular-nums; }
+
+        /* Holographic HUD — additive, does not affect existing cards */
+        .holo-wrap {
+            perspective: 900px;
+            width: min(420px, 42vw);
+            min-width: 260px;
+            height: 118px;
+            position: relative;
+        }
+        .holo-stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: none;
+            transform-style: preserve-3d;
+        }
+        .holo-grid {
+            position: absolute; left: 8px; right: 8px; bottom: 6px; height: 26px;
+            background:
+                linear-gradient(rgba(34,211,238,0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168,85,247,0.10) 1px, transparent 1px);
+            background-size: 18px 14px;
+            border: 1px solid rgba(34,211,238,0.22);
+            box-shadow: 0 0 24px rgba(34,211,238,0.12), inset 0 0 30px rgba(168,85,247,0.08);
+            transform: none;
+            animation: holoPulse 4.5s ease-in-out infinite;
+        }
+        .holo-scan {
+            position: absolute; left: 6%; right: 6%; height: 2px; top: 12%;
+            background: linear-gradient(90deg, transparent, rgba(34,211,238,0.85), transparent);
+            box-shadow: 0 0 12px #22d3ee;
+            animation: holoScan 3.2s linear infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .holo-bars {
+            position: absolute; inset: 0;
+            display: flex; align-items: flex-end; justify-content: space-evenly;
+            padding: 10px 18px 22px;
+            transform-style: preserve-3d;
+        }
+        .holo-col { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 18%; }
+        .holo-prism {
+            width: 100%;
+            height: 72px;
+            display: flex; align-items: flex-end;
+            transform-style: preserve-3d;
+        }
+        .holo-bar {
+            width: 100%;
+            height: 20%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: none;
+            transition: height 700ms cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .holo-bar::before, .holo-bar::after {
+            content: "";
+            position: absolute; inset: 0;
+        }
+        .holo-bar::before {
+            background: linear-gradient(180deg, var(--holo) 0%, transparent 100%);
+            opacity: 0.85;
+            box-shadow: 0 0 16px var(--holo), inset 0 0 8px var(--holo);
+            clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%);
+        }
+        .holo-bar::after {
+            background: var(--holo);
+            opacity: 0.18;
+            filter: blur(6px);
+            transform: translateZ(-8px) scaleX(1.3);
+        }
+        .holo-col[data-k="cpu"] { --holo: #fb923c; }
+        .holo-col[data-k="ram"] { --holo: #c084fc; }
+        .holo-col[data-k="disk"] { --holo: #22d3ee; }
+        .holo-col[data-k="temp"] { --holo: #34d399; }
+        .holo-lbl {
+            font-size: 9px; letter-spacing: 1.6px; color: rgba(255,255,255,0.45);
+            font-family: ui-monospace, monospace;
+        }
+        .holo-val {
+            font-size: 10px; font-family: ui-monospace, monospace;
+            color: var(--holo); text-shadow: 0 0 8px var(--holo);
+        }
+        .holo-spark {
+            position: absolute; left: 0; right: 0; bottom: 0; height: 118px;
+            pointer-events: none; mix-blend-mode: screen; opacity: 0.7;
+        }
+        @keyframes holoScan {
+            0% { top: 8%; opacity: 0; }
+            12% { opacity: 1; }
+            88% { opacity: 1; }
+            100% { top: 78%; opacity: 0; }
+        }
+        @keyframes holoPulse {
+            0%, 100% { opacity: 0.55; }
+            50% { opacity: 0.95; }
+        }
+        @media (max-width: 900px) {
+            .holo-wrap { display: none; }
+        }
+
     </style>
 
 <style id="elmer-bar-css">
@@ -69,6 +171,37 @@
                 <div class="text-xs tracking-[3px] text-cyan-400 font-medium mb-1">RACKPI5 • OPENCLAW v2026.9.2</div>
                 <div class="font-display text-6xl tracking-tighter">MISSION CONTROL</div>
             </div>
+
+            <div class="holo-wrap hidden md:block" aria-hidden="true">
+                <div class="holo-stage">
+                    <div class="holo-grid"></div>
+                    <div class="holo-scan"></div>
+                    <div class="holo-bars">
+                        <div class="holo-col" data-k="cpu">
+                            <div class="holo-val" id="holo-cpu-val">—</div>
+                            <div class="holo-prism"><div class="holo-bar" id="holo-cpu"></div></div>
+                            <div class="holo-lbl">CPU</div>
+                        </div>
+                        <div class="holo-col" data-k="ram">
+                            <div class="holo-val" id="holo-ram-val">—</div>
+                            <div class="holo-prism"><div class="holo-bar" id="holo-ram"></div></div>
+                            <div class="holo-lbl">RAM</div>
+                        </div>
+                        <div class="holo-col" data-k="disk">
+                            <div class="holo-val" id="holo-disk-val">—</div>
+                            <div class="holo-prism"><div class="holo-bar" id="holo-disk"></div></div>
+                            <div class="holo-lbl">DSK</div>
+                        </div>
+                        <div class="holo-col" data-k="temp">
+                            <div class="holo-val" id="holo-temp-val">—</div>
+                            <div class="holo-prism"><div class="holo-bar" id="holo-temp"></div></div>
+                            <div class="holo-lbl">TMP</div>
+                        </div>
+                    </div>
+                    <canvas class="holo-spark" id="holo-spark" width="420" height="118"></canvas>
+                </div>
+            </div>
+
             <div class="text-right">
                 <div class="text-emerald-400 text-sm flex items-center justify-end gap-x-2">
                     <i class="fa-solid fa-check-double"></i>
@@ -130,8 +263,9 @@
                 </div>
             </div>
 
-            <!-- Pi Status -->
-            <div class="lg:col-span-4 glass rounded-3xl p-7 border border-white/10">
+            <!-- Pi Status + SoC hologram -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+            <div class="glass rounded-3xl p-7 border border-white/10">
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <div class="section-header text-zinc-400">RASPBERRY PI 5</div>
@@ -148,8 +282,21 @@
                 </div>
             </div>
 
-            <!-- OpenClaw + Tailscale -->
-            <div class="lg:col-span-3 glass rounded-3xl p-7 border border-white/10">
+            <div class="glass rounded-3xl p-4 border border-white/10 flex-1 min-h-[220px] relative overflow-hidden">
+                <div class="flex items-center justify-between mb-2 px-1">
+                    <div>
+                        <div class="section-header text-zinc-400">SOC CORE</div>
+                        <div class="text-sm font-semibold tracking-tight">Thermal Hologram</div>
+                    </div>
+                    <span id="soc-holo-label" class="font-mono text-[10px] text-emerald-400">— °C</span>
+                </div>
+                <canvas id="soc-holo" class="w-full h-[190px] block" width="420" height="190"></canvas>
+            </div>
+            </div>
+
+            <!-- OpenClaw + Tailscale + mesh hologram -->
+            <div class="lg:col-span-3 flex flex-col gap-6">
+            <div class="glass rounded-3xl p-7 border border-white/10">
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <div class="section-header text-zinc-400">OPENCLAW + TAILSCALE</div>
@@ -171,6 +318,18 @@
                         <span id="tailscale-peers" class="font-mono text-emerald-300">—</span>
                     </div>
                 </div>
+            </div>
+
+            <div class="glass rounded-3xl p-4 border border-white/10 flex-1 min-h-[220px] relative overflow-hidden">
+                <div class="flex items-center justify-between mb-2 px-1">
+                    <div>
+                        <div class="section-header text-zinc-400">TAILNET MESH</div>
+                        <div class="text-sm font-semibold tracking-tight">Holographic Nodes</div>
+                    </div>
+                    <span id="mesh-peer-label" class="font-mono text-[10px] text-cyan-400">— NODES</span>
+                </div>
+                <canvas id="mesh-holo" class="w-full h-[190px] block" width="360" height="190"></canvas>
+            </div>
             </div>
 
             <!-- Live Telemetry -->
@@ -237,6 +396,10 @@
                 // Temp
                 document.getElementById('temp-value').textContent = s.temperature + '°C';
                 document.getElementById('pi-temp').textContent = s.temperature + '°C';
+                window.__socTemp = Number(s.temperature) || 0;
+                window.__socThrottle = s.throttle_status || 'UNKNOWN';
+                var shl = document.getElementById('soc-holo-label');
+                if (shl) shl.textContent = window.__socTemp.toFixed(1) + ' °C';
                 updateBar('temp-bar', Math.min((s.temperature - 35) * 3.5, 100), 'from-emerald-400 to-green-400');
 
                 // Throttle
@@ -256,14 +419,24 @@
                     tsEl.textContent = 'ONLINE';
                     tsEl.className = 'px-3 py-0.5 text-xs rounded-full bg-emerald-400/10 text-emerald-400 font-medium';
                     peersEl.textContent = ts.peers || '0';
+                    window.__meshPeers = Number(ts.peers) || 0;
+                    window.__meshOnline = true;
                 } else {
                     tsEl.textContent = 'Not connected';
                     tsEl.className = 'px-3 py-0.5 text-xs rounded-full bg-zinc-400/10 text-zinc-400 font-medium';
                     peersEl.textContent = '—';
+                    window.__meshPeers = 0;
+                    window.__meshOnline = false;
                 }
 
                 // OpenClaw
+                
+                var mpl = document.getElementById('mesh-peer-label');
+                if (mpl) mpl.textContent = (window.__meshPeers || 0) + ' NODES';
+
                 document.getElementById('openclaw-status').textContent = data.openclaw.status.toUpperCase();
+
+                updateHoloHud(s);
 
                 // Performance Indicators grid
                 renderTelemetryGrid(data);
@@ -274,6 +447,60 @@
                 console.error('Failed to fetch status', e);
                 document.getElementById('last-update').textContent = 'ERROR';
             }
+        }
+
+
+        const holoHistory = { cpu: [], ram: [], disk: [], temp: [] };
+        const HOLO_MAX = 48;
+        function pushHolo(key, val) {
+            const arr = holoHistory[key];
+            arr.push(val);
+            if (arr.length > HOLO_MAX) arr.shift();
+        }
+        function updateHoloHud(s) {
+            const cpu = Number(s.cpu_percent) || 0;
+            const ram = Number(s.memory_percent) || 0;
+            const disk = Number(s.disk_percent) || 0;
+            const temp = Number(s.temperature) || 0;
+            const tempPct = Math.max(0, Math.min(100, (temp / 85) * 100));
+            const setH = (id, pct) => {
+                const el = document.getElementById(id);
+                if (el) el.style.height = Math.max(8, Math.min(100, pct)) + '%';
+            };
+            setH('holo-cpu', cpu); setH('holo-ram', ram); setH('holo-disk', disk); setH('holo-temp', tempPct);
+            const st = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+            st('holo-cpu-val', cpu.toFixed(0) + '%');
+            st('holo-ram-val', ram.toFixed(0) + '%');
+            st('holo-disk-val', disk.toFixed(0) + '%');
+            st('holo-temp-val', temp.toFixed(0) + '°');
+            pushHolo('cpu', cpu); pushHolo('ram', ram); pushHolo('disk', disk); pushHolo('temp', tempPct);
+            drawHoloSpark();
+        }
+        function drawHoloSpark() {
+            const c = document.getElementById('holo-spark');
+            if (!c || !c.getContext) return;
+            const ctx = c.getContext('2d');
+            const w = c.width, h = c.height;
+            ctx.clearRect(0, 0, w, h);
+            const series = [
+                { key: 'cpu', color: 'rgba(251,146,60,0.55)' },
+                { key: 'ram', color: 'rgba(192,132,252,0.55)' },
+                { key: 'disk', color: 'rgba(34,211,238,0.45)' },
+                { key: 'temp', color: 'rgba(52,211,153,0.45)' }
+            ];
+            series.forEach((s, si) => {
+                const data = holoHistory[s.key];
+                if (data.length < 2) return;
+                ctx.beginPath();
+                ctx.strokeStyle = s.color;
+                ctx.lineWidth = 1.4;
+                data.forEach((v, i) => {
+                    const x = (i / (HOLO_MAX - 1)) * w;
+                    const y = h - 16 - (v / 100) * (h - 36) - si * 2;
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                });
+                ctx.stroke();
+            });
         }
 
         function renderTelemetryGrid(data) {
@@ -313,6 +540,173 @@
         }
 
         window.onload = boot;
+
+        
+        (function meshHolo() {
+            var canvas = document.getElementById('mesh-holo');
+            if (!canvas || !canvas.getContext) return;
+            var ctx = canvas.getContext('2d');
+            var t0 = 0;
+            window.__meshPeers = window.__meshPeers || 7;
+            window.__meshOnline = true;
+            function project(x, y, z, w, h) {
+                var fl = 220;
+                var s = fl / (fl + z);
+                return { x: w / 2 + x * s, y: h / 2 + y * s * 0.72, s: s, z: z };
+            }
+            function frame() {
+                var w = canvas.width, h = canvas.height;
+                t0 += 0.012;
+                ctx.clearRect(0, 0, w, h);
+                ctx.strokeStyle = 'rgba(34,211,238,0.08)';
+                for (var i = 0; i < 6; i++) {
+                    ctx.beginPath();
+                    ctx.ellipse(w/2, h/2 + 18, 40 + i*18, 12 + i*6, 0, 0, Math.PI*2);
+                    ctx.stroke();
+                }
+                var n = Math.max(3, Math.min(12, (window.__meshPeers || 0) + 1));
+                var nodes = [{ x: 0, y: 8, z: 0, hub: true }];
+                for (var i = 1; i < n; i++) {
+                    var a = t0 * 0.35 + (i / (n - 1)) * Math.PI * 2;
+                    var b = Math.sin(t0 * 0.4 + i) * 0.45;
+                    var r = 78;
+                    nodes.push({
+                        x: Math.cos(a) * r * Math.cos(b),
+                        y: Math.sin(b) * 42,
+                        z: Math.sin(a) * r * Math.cos(b),
+                        hub: false
+                    });
+                }
+                var pts = [];
+                for (var i = 0; i < nodes.length; i++) {
+                    var nd = nodes[i];
+                    var pr = project(nd.x, nd.y, nd.z, w, h);
+                    pr.hub = nd.hub;
+                    pts.push(pr);
+                }
+                var hub = pts[0];
+                for (var i = 1; i < pts.length; i++) {
+                    var pt = pts[i];
+                    ctx.beginPath();
+                    ctx.moveTo(hub.x, hub.y);
+                    ctx.lineTo(pt.x, pt.y);
+                    var alpha = 0.15 + 0.35 * ((pt.z + 80) / 160);
+                    ctx.strokeStyle = window.__meshOnline
+                        ? 'rgba(34,211,238,' + alpha + ')'
+                        : 'rgba(160,160,160,' + (alpha * 0.5) + ')';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+                for (var i = 1; i < pts.length; i++) {
+                    var a = pts[i], b = pts[i % (pts.length - 1) + 1];
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.strokeStyle = 'rgba(168,85,247,0.12)';
+                    ctx.stroke();
+                }
+                pts.sort(function(a,b){ return a.z - b.z; });
+                for (var i = 0; i < pts.length; i++) {
+                    var pt = pts[i];
+                    var rr = pt.hub ? 7 : 3.2 + pt.s * 2;
+                    var g = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, rr * 4);
+                    if (pt.hub) {
+                        g.addColorStop(0, 'rgba(52,211,153,0.95)');
+                        g.addColorStop(0.4, 'rgba(34,211,238,0.45)');
+                        g.addColorStop(1, 'rgba(34,211,238,0)');
+                    } else {
+                        g.addColorStop(0, 'rgba(192,132,252,0.95)');
+                        g.addColorStop(0.5, 'rgba(34,211,238,0.25)');
+                        g.addColorStop(1, 'rgba(34,211,238,0)');
+                    }
+                    ctx.fillStyle = g;
+                    ctx.beginPath();
+                    ctx.arc(pt.x, pt.y, rr * 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = pt.hub ? '#34d399' : '#e9d5ff';
+                    ctx.beginPath();
+                    ctx.arc(pt.x, pt.y, rr, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                var scanY = (Math.sin(t0 * 1.4) * 0.5 + 0.5) * h;
+                ctx.fillStyle = 'rgba(34,211,238,0.08)';
+                ctx.fillRect(0, scanY, w, 2);
+                requestAnimationFrame(frame);
+            }
+            requestAnimationFrame(frame);
+        })();
+
+        (function socHolo() {
+            var canvas = document.getElementById('soc-holo');
+            if (!canvas || !canvas.getContext) return;
+            var ctx = canvas.getContext('2d');
+            var t = 0;
+            window.__socTemp = window.__socTemp || 42;
+            window.__socThrottle = window.__socThrottle || 'CLEAN';
+            function frame() {
+                var w = canvas.width, h = canvas.height;
+                t += 0.016;
+                ctx.clearRect(0, 0, w, h);
+                var cx = w / 2, cy = h / 2 + 6;
+                var temp = window.__socTemp || 0;
+                var hot = Math.max(0, Math.min(1, (temp - 35) / 50));
+                var col = hot > 0.7 ? [251,113,133] : hot > 0.4 ? [251,146,60] : [52,211,153];
+                for (var r = 0; r < 5; r++) {
+                    ctx.beginPath();
+                    ctx.ellipse(cx, cy + 10, 28 + r * 22, 10 + r * 7, 0, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (0.08 + r * 0.04) + ')';
+                    ctx.stroke();
+                }
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(t * 0.25);
+                var chip = 34;
+                ctx.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0.85)';
+                ctx.lineWidth = 1.4;
+                ctx.strokeRect(-chip, -chip * 0.7, chip * 2, chip * 1.4);
+                ctx.strokeRect(-chip + 8, -chip * 0.7 + 6, chip * 2 - 16, chip * 1.4 - 12);
+                for (var i = -3; i <= 3; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(-chip, i * 7);
+                    ctx.lineTo(-chip - 10, i * 7);
+                    ctx.moveTo(chip, i * 7);
+                    ctx.lineTo(chip + 10, i * 7);
+                    ctx.strokeStyle = 'rgba(34,211,238,0.45)';
+                    ctx.stroke();
+                }
+                ctx.restore();
+                for (var i = 0; i < 4; i++) {
+                    var a = t * 0.9 + i * (Math.PI * 2 / 4);
+                    var x = cx + Math.cos(a) * 70;
+                    var y = cy + Math.sin(a) * 28;
+                    var g = ctx.createRadialGradient(x, y, 0, x, y, 16);
+                    g.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0.9)');
+                    g.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+                    ctx.fillStyle = g;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 16, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2.4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(cx, cy);
+                    ctx.lineTo(x, y);
+                    ctx.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0.25)';
+                    ctx.stroke();
+                }
+                ctx.font = '11px ui-monospace, monospace';
+                ctx.fillStyle = 'rgb(' + col[0] + ',' + col[1] + ',' + col[2] + ')';
+                ctx.textAlign = 'center';
+                ctx.fillText(temp.toFixed(1) + 'C', cx, cy + 4);
+                ctx.fillStyle = 'rgba(228,228,231,0.45)';
+                ctx.fillText(window.__socThrottle || '', cx, cy + 18);
+                requestAnimationFrame(frame);
+            }
+            requestAnimationFrame(frame);
+        })();
+
     </script>
 </body>
 </html>
