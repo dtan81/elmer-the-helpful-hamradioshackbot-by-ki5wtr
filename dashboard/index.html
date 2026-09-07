@@ -21,8 +21,8 @@
         /* Holographic HUD — additive, does not affect existing cards */
         .holo-wrap {
             perspective: 900px;
-            width: min(420px, 42vw);
-            min-width: 260px;
+            width: 100%;
+            min-width: 0;
             height: 118px;
             position: relative;
         }
@@ -115,9 +115,7 @@
             0%, 100% { opacity: 0.55; }
             50% { opacity: 0.95; }
         }
-        @media (max-width: 900px) {
-            .holo-wrap { display: none; }
-        }
+
 
     </style>
 
@@ -172,35 +170,7 @@
                 <div class="font-display text-6xl tracking-tighter">MISSION CONTROL</div>
             </div>
 
-            <div class="holo-wrap hidden md:block" aria-hidden="true">
-                <div class="holo-stage">
-                    <div class="holo-grid"></div>
-                    <div class="holo-scan"></div>
-                    <div class="holo-bars">
-                        <div class="holo-col" data-k="cpu">
-                            <div class="holo-val" id="holo-cpu-val">—</div>
-                            <div class="holo-prism"><div class="holo-bar" id="holo-cpu"></div></div>
-                            <div class="holo-lbl">CPU</div>
-                        </div>
-                        <div class="holo-col" data-k="ram">
-                            <div class="holo-val" id="holo-ram-val">—</div>
-                            <div class="holo-prism"><div class="holo-bar" id="holo-ram"></div></div>
-                            <div class="holo-lbl">RAM</div>
-                        </div>
-                        <div class="holo-col" data-k="disk">
-                            <div class="holo-val" id="holo-disk-val">—</div>
-                            <div class="holo-prism"><div class="holo-bar" id="holo-disk"></div></div>
-                            <div class="holo-lbl">DSK</div>
-                        </div>
-                        <div class="holo-col" data-k="temp">
-                            <div class="holo-val" id="holo-temp-val">—</div>
-                            <div class="holo-prism"><div class="holo-bar" id="holo-temp"></div></div>
-                            <div class="holo-lbl">TMP</div>
-                        </div>
-                    </div>
-                    <canvas class="holo-spark" id="holo-spark" width="420" height="118"></canvas>
-                </div>
-            </div>
+            
 
             <div class="text-right">
                 <div class="text-emerald-400 text-sm flex items-center justify-end gap-x-2">
@@ -215,7 +185,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             <!-- System Metrics -->
-            <div class="lg:col-span-5 glass rounded-3xl p-7 border border-white/10">
+            <div class="lg:col-span-5 flex flex-col gap-6">
+            <div class="glass rounded-3xl p-7 border border-white/10">
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <div class="section-header text-zinc-400">SYSTEM METRICS</div>
@@ -263,7 +234,40 @@
                 </div>
             </div>
 
-            <!-- Pi Status + SoC hologram -->
+                        <div class="glass rounded-3xl p-4 border border-white/10 overflow-hidden">
+            <div class="holo-wrap w-full" aria-hidden="true">
+                <div class="holo-stage">
+                    <div class="holo-grid"></div>
+                    <div class="holo-scan"></div>
+                    <div class="holo-bars">
+                        <div class="holo-col" data-k="cpu">
+                            <div class="holo-val" id="holo-cpu-val">—</div>
+                            <div class="holo-prism"><div class="holo-bar" id="holo-cpu"></div></div>
+                            <div class="holo-lbl">CPU</div>
+                        </div>
+                        <div class="holo-col" data-k="ram">
+                            <div class="holo-val" id="holo-ram-val">—</div>
+                            <div class="holo-prism"><div class="holo-bar" id="holo-ram"></div></div>
+                            <div class="holo-lbl">RAM</div>
+                        </div>
+                        <div class="holo-col" data-k="disk">
+                            <div class="holo-val" id="holo-disk-val">—</div>
+                            <div class="holo-prism"><div class="holo-bar" id="holo-disk"></div></div>
+                            <div class="holo-lbl">DSK</div>
+                        </div>
+                        <div class="holo-col" data-k="temp">
+                            <div class="holo-val" id="holo-temp-val">—</div>
+                            <div class="holo-prism"><div class="holo-bar" id="holo-temp"></div></div>
+                            <div class="holo-lbl">TMP</div>
+                        </div>
+                    </div>
+                    <canvas class="holo-spark" id="holo-spark" width="420" height="118"></canvas>
+                </div>
+            </div>
+            </div>
+            </div>
+
+<!-- Pi Status + SoC hologram -->
             <div class="lg:col-span-4 flex flex-col gap-6">
             <div class="glass rounded-3xl p-7 border border-white/10">
                 <div class="flex items-center justify-between mb-6">
