@@ -28,17 +28,56 @@
 2. Perform a full system update and reboot.
 3. (Optional) Create a dedicated non-root user and enable SSH with key authentication.
 
-### 3. OpenClaw Installation
-1. Install Node.js 26 (recommended version).
+### 3. OpenClaw Installation & Onboarding
+
+1. Install Node.js 26 (required for this setup).
+
 2. Install OpenClaw globally:
    ```bash
    npm install -g openclaw@latest --allow-scripts=openclaw
    ```
-3. Run the onboarding wizard:
+
+3. Run the onboarding wizard with the daemon flag:
    ```bash
    openclaw onboard --install-daemon
    ```
-4. Verify the gateway is running:
+
+   The wizard will guide you through these steps. Follow the instructions below for each prompt:
+
+   - **Security acknowledgment**  
+     Read the risk notice and confirm you understand the implications of running an agent with tools.
+
+   - **Existing config detection** (if present)  
+     Choose **Keep** if you want to preserve your current setup, or **Modify** if you’re starting fresh.
+
+   - **Setup mode**  
+     Select **QuickStart** (recommended for most users) unless you need full control.
+
+   - **Model / Provider selection**  
+     Choose your model provider (e.g. `xai/grok-4.3`). This sets your default model. You can change it later via configuration.
+
+   - **API key / secret input**  
+     Paste your API key or select **SecretRef** (recommended) to store it securely.
+
+   - **Workspace path**  
+     Accept the default (`~/.openclaw/workspace`) or enter a custom path.
+
+   - **Gateway settings**  
+     Use the defaults for port and bind address. Keep **Token** auth enabled.
+
+   - **Channels**  
+     Configure your Telegram bot token when prompted (or skip and configure later).
+
+   - **Daemon installation**  
+     The `--install-daemon` flag will automatically set this up as a systemd service.
+
+   - **Skills & dependencies**  
+     Allow the wizard to install required packages.
+
+   - **Verification**  
+     The wizard will run health checks and confirm the gateway is working.
+
+4. After the wizard completes, verify everything is running:
    ```bash
    openclaw status
    ```
