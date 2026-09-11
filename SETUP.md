@@ -115,17 +115,18 @@ Create or copy the following files into your workspace directory:
 These files control how the agent behaves and what it remembers across sessions.
 
 ### 5. Workspace & Skills
-Enable the ham radio skill set for full functionality:
 
-- `ham-aprs`
-- `ham-digital`
-- `ham-dx`
-- `ham-emcomm`
-- `ham-license`
-- `ham-pota`
-- `ham-propagation`
-- `ham-satellite`
-- `ham-station`
+Enable the ham radio skill set for full functionality. Each skill below adds specific capabilities:
+
+- `ham-aprs` — APRS tracking, messaging, and digipeater functions
+- `ham-digital` — FT8, FT4, and other digital mode support
+- `ham-dx` — DX cluster monitoring and rare station alerts
+- `ham-emcomm` — Emergency communications and Winlink support
+- `ham-license` — License privileges, band plans, and exam help
+- `ham-pota` — POTA activation and hunting assistance
+- `ham-propagation` — Real-time HF/VHF band conditions and forecasts
+- `ham-satellite` — Amateur satellite pass predictions and operating tips
+- `ham-station` — General station assistant for HF, digital, and POTA
 
 Skills are loaded from the `plugin-skills` directory. Review each skill’s `SKILL.md` file for configuration options.
 
