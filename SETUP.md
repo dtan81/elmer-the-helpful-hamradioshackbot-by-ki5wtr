@@ -148,6 +148,11 @@ This is one of the most common areas of difficulty.
 - After the first successful DM, the user ID is typically recorded automatically.
 - Restart the gateway after making changes to `openclaw.json`.
 
+**How to get your numeric Telegram user ID**  
+1. Open Telegram and start a chat with [@userinfobot](https://t.me/userinfobot).
+2. Send any message to the bot.
+3. The bot will reply with your numeric user ID — copy that number.
+
 ### Troubleshooting & Common Issues
 
 **Node.js version errors**  
