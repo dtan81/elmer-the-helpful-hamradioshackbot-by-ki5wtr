@@ -7,6 +7,34 @@
 **Last Updated:** 2026-09-06  
 **Tested with:** OpenClaw 2026.9.2
 
+### Minimum Working Setup (Quick Start)
+
+For users who already have experience with Raspberry Pi and Node.js:
+
+1. Install Node.js 26 and OpenClaw:
+   ```bash
+   npm install -g openclaw@latest --allow-scripts=openclaw
+   ```
+
+2. Run onboarding:
+   ```bash
+   openclaw onboard --install-daemon
+   ```
+
+3. During onboarding:
+   - Select your model (e.g. `xai/grok-4.3`)
+   - Configure Telegram with your bot token and numeric user ID
+   - Use the default workspace path
+
+4. Copy your `SOUL.md`, `IDENTITY.md`, `USER.md`, and `MEMORY.md` into the workspace.
+
+5. Verify:
+   ```bash
+   openclaw status
+   ```
+
+This should get a basic working instance running quickly.
+
 **Goal:** Step-by-step instructions to build an Elmer instance identical to the KI5WTR configuration on a Raspberry Pi 5 (16 GB).
 
 **Prerequisites**
