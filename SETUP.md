@@ -9,6 +9,28 @@
 
 **Goal:** Step-by-step instructions to build an Elmer instance identical to the KI5WTR configuration on a Raspberry Pi 5 (16 GB).
 
+**Prerequisites**
+
+Before starting, make sure you have:
+
+- Raspberry Pi 5 (16 GB RAM recommended)
+- High-quality microSD card or NVMe SSD
+- Node.js 26 installed
+- A Telegram account and bot token (create one at [@BotFather](https://t.me/BotFather))
+- Tailscale account (recommended for remote access)
+- Basic familiarity with the terminal
+
+**Prerequisites**
+
+Before starting, make sure you have:
+
+- Raspberry Pi 5 (16 GB RAM recommended)
+- High-quality microSD card or NVMe SSD
+- Node.js 26 installed
+- A Telegram account and bot token (create one at [@BotFather](https://t.me/BotFather))
+- Tailscale account (recommended for remote access)
+- Basic familiarity with the terminal
+
 ### Known Working Configuration
 
 - **OpenClaw Version:** 2026.9.2
