@@ -136,6 +136,34 @@ This is one of the most common areas of difficulty.
 - After the first successful DM, the user ID is typically recorded automatically.
 - Restart the gateway after making changes to `openclaw.json`.
 
+### Troubleshooting & Common Issues
+
+**Node.js version errors**  
+Make sure you are on Node 26.x. Run `node -v`. If you’re on an older version, use `nvm install 26 && nvm use 26`.
+
+**`openclaw onboard` fails or hangs**  
+Try running it without the `--install-daemon` flag first:
+```bash
+openclaw onboard
+```
+Then add the daemon afterward if needed.
+
+**Telegram bot not responding**  
+- Double-check your bot token in `openclaw.json`.
+- Make sure your numeric user ID is in the `allowFrom` list.
+- Restart the gateway after changes: `sudo systemctl restart openclaw`.
+
+**How to get your numeric Telegram user ID**  
+1. Start a chat with [@userinfobot](https://t.me/userinfobot) on Telegram.
+2. Send any message.
+3. The bot will reply with your numeric user ID. Copy that number into your config.
+
+**Gateway won’t start after onboarding**  
+Run `openclaw doctor` or `openclaw status --deep` to see detailed errors.
+
+**Skills not loading**  
+Make sure the skill folders exist in `plugin-skills/` and that you’ve run `npm install` in the workspace if required by the skill.
+
 ### 7. OpenClaw Mobile App / Node Pairing (iOS & Android)
 This is the second most common source of issues.
 
