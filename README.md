@@ -129,28 +129,60 @@ Elmer follows the core principles of being genuinely helpful, having real opinio
 - Exploration of local voice input/output on the Raspberry Pi 5
 
 ## Skills
+## Skills
 
-Elmer currently has the following specialized ham radio skills available:
+Elmer currently has the following 17 specialized ham radio skills available:
 
-- **ham-aprs** – APRS tracking, messaging, digipeaters, and tactical use
-- **ham-digital** – FT8, FT4, and other digital mode help (setup, strategy, logging)
-- **ham-drive** – Phone-friendly VHF/UHF road-trip radio planning card (RepeaterBook lookups, simplex fallbacks, APRS) — by Dominic Tanner (KI5WTR)
-- **ham-dx** – Monitor DX clusters, rare stations, DXpeditions, and needed entities
-- **ham-emcomm** – Emergency communications readiness, nets, Winlink, and procedures
-- **ham-license** – Amateur radio license privileges, band plans, power limits, and exam questions by country and class
-- **ham-pota** – POTA activations, hunting, park info, and logging help for KI5WTR
-- **ham-propagation** – Real-time HF/VHF band conditions, solar indices, MUF, grayline, and operating recommendations
-- **ham-satellite** – Amateur satellite passes, Doppler, modes, and operating tips
-- **ham-station** – Personal station assistant for KI5WTR – HF, digital, POTA, EmComm, light contesting, and APRS workflows
+### Core Ham Skills
+| Skill | Description |
+|-------|-------------|
+| **adif-line** | Build one ADIF QSO record from fields the operator provides |
+| **freq-band** | Map a frequency in MHz to amateur band and wavelength |
+| **grid-calc** | Convert lat/lon to Maidenhead grid, decode a grid, or distance and bearing between two grids |
+| **phonetics** | Spell callsigns and text with ITU phonetics |
+| **shack-time** | Report UTC and America/Denver local time |
 
+### Digital & Data Modes
+| Skill | Description |
+|-------|-------------|
+| **ham-digital** | FT8, FT4, and other digital mode help (setup, strategy, logging) |
+| **winlink** | Check or send Winlink messages over CMS telnet via Pat |
+
+### Operating & Activities
+| Skill | Description |
+|-------|-------------|
+| **ham-aprs** | APRS tracking, messaging, digipeaters, and tactical use |
+| **ham-dx** | Monitor DX clusters, rare stations, DXpeditions, and needed entities |
+| **ham-emcomm** | Emergency communications readiness, nets, Winlink, and procedures |
+| **ham-pota** | POTA activations, hunting, park info, and logging help |
+| **ham-satellite** | Amateur satellite passes, Doppler, modes, and operating tips |
+
+### Propagation & Conditions
+| Skill | Description |
+|-------|-------------|
+| **ham-propagation** | Real-time HF/VHF band conditions, solar indices, MUF, grayline, and operating recommendations |
+| **solar-now** | Fetch current solar indices (SFI, A, K, sunspots) from hamqsl XML |
+
+### Station & Planning
+| Skill | Description |
+|-------|-------------|
+| **ham-drive** | Phone-friendly VHF/UHF road-trip radio planning card (RepeaterBook lookups, simplex fallbacks, APRS) |
+| **ham-license** | Amateur radio license privileges, band plans, power limits, and exam questions by country and class |
+| **ham-station** | Personal station assistant – HF, digital, POTA, EmComm, light contesting, and APRS workflows |
+
+That’s **17 ham-focused skills** currently available.
 ## Project Goals
 
 This repository documents and develops Elmer as a personal ham radio shack assistant. The goal is a reliable, always-available companion that keeps costs low while delivering full value on demand.
 
 ## Tech & Tools
-
 Elmer runs inside the OpenClaw platform with the following specialized ham radio skills enabled:
 
+- **adif-line** – Build ADIF QSO records
+- **freq-band** – Frequency to band and wavelength mapping
+- **grid-calc** – Maidenhead grid calculations and distance/bearing
+- **phonetics** – ITU phonetic spelling
+- **shack-time** – UTC and local time reporting
 - **ham-aprs** – APRS tracking, messaging, and digipeater support
 - **ham-digital** – FT8, FT4, and other digital mode assistance
 - **ham-drive** – VHF/UHF road-trip radio planning
@@ -161,9 +193,8 @@ Elmer runs inside the OpenClaw platform with the following specialized ham radio
 - **ham-propagation** – Real-time HF/VHF band conditions and forecasts
 - **ham-satellite** – Satellite pass predictions and operating tips
 - **ham-station** – General station assistant workflows
-
-Additional platform capabilities include web search, GitHub integration, memory management, image generation, and task orchestration.
-
+- **solar-now** – Current solar indices (SFI, A, K, sunspots)
+- **winlink** – Winlink message checking and sending
 ## Getting Started
 
 Elmer is designed to run as a personal agent. Check the OpenClaw documentation for deployment.
